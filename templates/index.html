@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>My Submission Form</title>
+</head>
 <body>
     <h1>My Submission Form</h1>
 
@@ -8,11 +11,25 @@
     {% endif %}
 
     <form action="/submittodoitem" method="POST">
-        <input type="text" name="itemName" placeholder="Item Name">
-        <textarea name="itemDescription" placeholder="Item Description"></textarea>
+        <p>
+            <label>Item Name:</label><br>
+            <input type="text" name="itemName" required>
+        </p>
+        <p>
+            <label>Item Description:</label><br>
+            <textarea name="itemDescription" required></textarea>
+        </p>
         
-        <input type="text" name="itemId" placeholder="Item ID">
+        <p>
+            <label>Item ID:</label><br>
+            <input type="text" name="itemId">
+        </p>
         
+        <p>
+            <label>Item UUID:</label><br>
+            <input type="text" name="itemUuid">
+        </p>
+
         <button type="submit">Send to Mongo</button>
     </form>
 </body>
