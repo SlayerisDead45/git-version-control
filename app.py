@@ -1,48 +1,48 @@
 from flask import Flask, render_template, request, redirect, jsonify
 import json
-import os  # Read from system environment variables
-from dotenv import load_dotenv  # Load the .env file cleanly
+import os
+from dotenv import load_dotenv
 from pymongo import MongoClient
 
-# Initialize loading environment variables from your .env file
+# Load environmental configurations securely
 load_dotenv()
 
 app = Flask(__name__)
 
-# 1. THE API ROUTE
+# --- Requirement 1: File-based Local API Route ---
 @app.route('/api')
 def api_route():
-    # Read the local data storage file
     with open('data.json', 'r') as f:
         my_data = json.load(f)
     return jsonify(my_data)
 
-# 2. THE FORM PAGE
+# --- Requirement 2: Frontend Form Landing Page ---
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# 3. HANDLING THE FORM SUBMISSION
+# --- Requirement 2: Form Handler & MongoDB Atlas Integration ---
 @app.route('/submit', methods=['POST'])
 def handle_form():
     user_text = request.form.get('content')
     
-    # Simple validation fallback
     if not user_text:
         return render_template('index.html', error_msg="Error: The box is empty!")
-        
+
     try:
-        # Dynamically read your sensitive string from .env
+        # Secure link fetched directly from your local hidden .env file
         uri = os.getenv("MONGO_URI")
-        
         client = MongoClient(uri)
         db = client.my_database
+        
+        # Save record to cloud collection
         db.my_collection.insert_one({"info": user_text})
         
-        # If it works, go to the success page
+        # Redirect pattern triggered upon success
         return redirect('/success')
+        
     except Exception as e:
-        # If it fails, show the error on the same page
+        # Error stays on the same page view without redirecting the user
         return render_template('index.html', error_msg=f"Database Error: {e}")
 
 @app.route('/success')

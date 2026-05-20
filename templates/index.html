@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Submission Form</title>
+</head>
 <body>
     <h1>My Submission Form</h1>
 
+    <!-- Inline Error Block: Stays on same page without redirection -->
     {% if error_msg %}
-        <p style="color: red;">{{ error_msg }}</p>
+        <p style="color: red;"><strong>{{ error_msg }}</strong></p>
     {% endif %}
 
     <form action="/submit" method="POST">
