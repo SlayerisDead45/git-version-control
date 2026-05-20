@@ -7,8 +7,12 @@
         <p style="color: red;">{{ error_msg }}</p>
     {% endif %}
 
-    <form action="/submit" method="POST">
-        <input type="text" name="content" placeholder="Enter text here">
+    <form action="/submittodoitem" method="POST">
+        <input type="text" name="itemName" placeholder="Item Name">
+        <textarea name="itemDescription" placeholder="Item Description"></textarea>
+        
+        <input type="text" name="itemId" placeholder="Item ID">
+        
         <button type="submit">Send to Mongo</button>
     </form>
 </body>
